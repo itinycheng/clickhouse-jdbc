@@ -1,5 +1,8 @@
 package ru.yandex.clickhouse.util;
 
+import ru.yandex.clickhouse.ClickHouseUtil;
+import ru.yandex.clickhouse.domain.ClickHouseDataType;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Array;
@@ -20,9 +23,6 @@ import java.util.Map;
 import java.util.TimeZone;
 import java.util.UUID;
 
-import ru.yandex.clickhouse.ClickHouseUtil;
-import ru.yandex.clickhouse.domain.ClickHouseDataType;
-
 public final class ClickHouseValueFormatter {
 
     public static final String NULL_MARKER  = "\\N";
@@ -30,7 +30,7 @@ public final class ClickHouseValueFormatter {
     private static final DateTimeFormatter DATE_FORMATTER =
         DateTimeFormatter.ofPattern("yyyy-MM-dd");
     private static final DateTimeFormatter DATE_TIME_FORMATTER =
-        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
     private static final DateTimeFormatter TIME_FORMATTER =
         DateTimeFormatter.ofPattern("HH:mm:ss");
 
@@ -44,7 +44,7 @@ public final class ClickHouseValueFormatter {
     private static ThreadLocal<SimpleDateFormat> dateTimeFormat = new ThreadLocal<SimpleDateFormat>() {
         @Override
         protected SimpleDateFormat initialValue() {
-            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         }
     };
 

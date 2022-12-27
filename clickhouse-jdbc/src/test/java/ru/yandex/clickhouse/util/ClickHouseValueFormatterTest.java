@@ -1,5 +1,10 @@
 package ru.yandex.clickhouse.util;
 
+import org.testng.annotations.Test;
+import ru.yandex.clickhouse.response.ByteFragment;
+import ru.yandex.clickhouse.response.ClickHouseColumnInfo;
+import ru.yandex.clickhouse.response.parser.ClickHouseValueParser;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
@@ -18,12 +23,6 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.TimeZone;
 import java.util.UUID;
-
-import org.testng.annotations.Test;
-
-import ru.yandex.clickhouse.response.ByteFragment;
-import ru.yandex.clickhouse.response.ClickHouseColumnInfo;
-import ru.yandex.clickhouse.response.parser.ClickHouseValueParser;
 
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotEquals;
@@ -313,7 +312,7 @@ public class ClickHouseValueFormatterTest {
     public void testRoundTripSQLTimestamp() throws Exception {
         TimeZone tzLosAngeles = TimeZone.getTimeZone("America/Los_Angeles");
         TimeZone tzBerlin = TimeZone.getTimeZone("Europe/Berlin");
-        Timestamp t0 = new Timestamp(1497474018000L);
+        Timestamp t0 = new Timestamp(1497474018535L);
         Timestamp t1 = (Timestamp) ClickHouseValueParser.getParser(Timestamp.class)
             .parse(ByteFragment.fromString(ClickHouseValueFormatter.formatTimestamp(t0, tzLosAngeles)),
                 ClickHouseColumnInfo.parse("String", "col", tzLosAngeles), tzLosAngeles);
@@ -328,7 +327,7 @@ public class ClickHouseValueFormatterTest {
             .parse(ByteFragment.fromString(ClickHouseValueFormatter.formatTimestamp(t0, tzLosAngeles)),
                 ClickHouseColumnInfo.parse("String", "col", tzLosAngeles), tzBerlin);
         Timestamp t2 = new Timestamp(
-                ZonedDateTime.of(LocalDateTime.of(2017,6, 14, 14, 0, 18),
+                ZonedDateTime.of(LocalDateTime.of(2017,6, 14, 14, 0, 18, 535000000),
                 tzBerlin.toZoneId())
             .toInstant()
             .toEpochMilli());
